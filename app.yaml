@@ -1,0 +1,51 @@
+application: sensorbus
+version: versao9
+runtime: python27
+api_version: 1
+threadsafe: true
+
+default_expiration: "30d"
+
+# index files
+handlers:
+- url: /(.+)/
+  static_files: public/\1/index.html
+  upload: public/(.+)/index.html
+
+# site root
+- url: /
+  static_files: public/index.html
+  upload: public/index.html
+
+# For folders without trailing slashes - ideally a 301 redirect, but we're static & it isn't 2004
+- url: /([^\.]+)([^/])
+  static_files: public/\1\2/index.html
+  upload: public/(.+)
+
+# Redirect Everything else
+- url: /(.+)
+  static_files: public/\1
+  upload: public/(.+)
+
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^(.*/)?tests$
+- ^(.*/)?test$
+- ^test/(.*/)?
+- ^COPYING.LESSER
+- ^README\..*
+- \.gitignore
+- ^\.git/.*
+- \.*\.lint$
+- ^fabfile\.py
+- ^index-edit\.html
+- ^server\.py
+- ^testrunner\.py
+- ^grunt\.js
+- ^node_modules/(.*/)?
